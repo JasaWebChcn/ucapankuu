@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Web HTML Custom By Checen — Website Estetik yang Bikin Salting</title>
+<meta name="description" content="Jasa pembuatan website ucapan & custom HTML paling estetik. Bebas request lagu, foto, animasi. Bikin dia baper dengan website yang cuma ada satu di dunia.">
+
+<!-- Google Fonts: Unbounded (display, chunky & Gen Z), Plus Jakarta Sans (body), Caveat (script accent) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   0. RESET & TOKENS
+============================================= */
+*,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+:root{
+  /* --- color tokens: dark, cozy, elegant --- */
+  --bg-void:      #09060f;
+  --bg-deep:      #120b21;
+  --bg-deep-2:    #1a1030;
+  --purple:       #8b6bff;
+  --purple-soft:  #5c3fc4;
+  --midnight:     #241a3d;
+  --midnight-2:   #2a1a4a;
+  --peach:        #ff9d7d;
+  --peach-soft:   #e88a68;
+  --gold:         #f3d9a8;
+
+  --text-hi:      #f7f2ec;
+  --text-mid:     #c9c0dd;
+  --text-low:     #8b81a3;
+
+  --glass:        rgba(255,255,255,0.055);
+  --glass-2:      rgba(255,255,255,0.09);
+  --glass-border: rgba(255,255,255,0.14);
+  --glass-border-soft: rgba(255,255,255,0.08);
+
+  --shadow-glow:  0 0 60px rgba(139,107,255,0.25);
+  --shadow-peach: 0 0 50px rgba(255,157,125,0.2);
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+
+  --font-display: 'Unbounded', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-script: 'Caveat', cursive;
+
+  --ease: cubic-bezier(.16,.84,.44,1);
+}
+
+body{
+  background: var(--bg-void);
+  color: var(--text-hi);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  position:relative;
+}
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+ul{ list-style:none; }
+::selection{ background:var(--purple); color:#fff; }
+
+/* focus visibility for accessibility */
+a:focus-visible, button:focus-visible{
+  outline: 2px solid var(--peach);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar{ width:10px; }
+::-webkit-scrollbar-track{ background:var(--bg-void); }
+::-webkit-scrollbar-thumb{ background:linear-gradient(var(--purple),var(--peach)); border-radius:10px; }
+
+.container{
+  width:100%;
+  max-width:1180px;
+  margin-inline:auto;
+  padding-inline: 24px;
+}
+
+.eyebrow{
+  font-family:var(--font-body);
+  font-weight:700;
+  font-size: 12.5px;
+  letter-spacing: 0.18em;
+  text-transform:uppercase;
+  color: var(--peach);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.eyebrow::before{
+  content:'';
+  width:6px; height:6px;
+  border-radius:50%;
+  background: var(--peach);
+  box-shadow: 0 0 10px var(--peach);
+}
+
+.script{
+  font-family: var(--font-script);
+  font-weight:700;
+  color: var(--peach);
+  font-style:normal;
+}
+
+/* ============================================
+   1. AMBIENT BACKGROUND — mesh gradient + noise
+============================================= */
+.ambient{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  overflow:hidden;
+  background: var(--bg-void);
+}
+.ambient .blob{
+  position:absolute;
+  border-radius:50%;
+  filter: blur(90px);
+  opacity:.55;
+  will-change: transform;
+}
+.blob-1{
+  width:52vw; height:52vw;
+  background: radial-gradient(circle at 30% 30%, var(--purple), transparent 70%);
+  top:-15%; left:-10%;
+  animation: drift1 34s ease-in-out infinite alternate;
+}
+.blob-2{
+  width:44vw; height:44vw;
+  background: radial-gradient(circle at 50% 50%, var(--peach-soft), transparent 70%);
+  bottom:-10%; right:-8%;
+  animation: drift2 40s ease-in-out infinite alternate;
+  opacity:.35;
+}
+.blob-3{
+  width:38vw; height:38vw;
+  background: radial-gradient(circle at 50% 50%, var(--midnight-2), transparent 72%);
+  top:35%; left:38%;
+  animation: drift3 46s ease-in-out infinite alternate;
+  opacity:.5;
+}
+@keyframes drift1{
+  0%{ transform: translate(0,0) scale(1); }
+  100%{ transform: translate(8vw,10vh) scale(1.15); }
+}
+@keyframes drift2{
+  0%{ transform: translate(0,0) scale(1); }
+  100%{ transform: translate(-6vw,-8vh) scale(1.1); }
+}
+@keyframes drift3{
+  0%{ transform: translate(-4vw,0) scale(1); }
+  100%{ transform: translate(5vw,-6vh) scale(1.2); }
+}
+
+.noise{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  opacity:.05;
+  pointer-events:none;
+  mix-blend-mode: overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce){
+  .ambient .blob{ animation:none !important; }
+  *{ scroll-behavior:auto !important; }
+}
+
+/* ============================================
+   2. NAVBAR
+============================================= */
+.nav{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:100;
+  padding: 18px 0;
+  transition: background .4s var(--ease), backdrop-filter .4s var(--ease), padding .3s var(--ease), border-color .4s;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled{
+  background: rgba(9,6,15,0.72);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--glass-border-soft);
+}
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  font-family: var(--font-display);
+  font-weight:700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.logo span{ color: var(--peach); }
+.nav-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 10px 20px;
+  border-radius: 100px;
+  background: var(--glass);
+  border:1px solid var(--glass-border);
+  font-weight:600;
+  font-size: 13.5px;
+  transition: transform .3s var(--ease), background .3s, border-color .3s;
+}
+.nav-cta:hover{
+  transform: translateY(-2px);
+  background: var(--glass-2);
+  border-color: rgba(255,157,125,0.5);
+}
+.nav-cta svg{ width:15px; height:15px; }
+
+/* ============================================
+   3. HERO
+============================================= */
+.hero{
+  position:relative;
+  padding: 168px 0 90px;
+  min-height: 92vh;
+  display:flex;
+  align-items:center;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items:center;
+}
+.hero-title{
+  font-family: var(--font-display);
+  font-weight:800;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 18px 0 22px;
+}
+.hero-title .line2{
+  display:block;
+  background: linear-gradient(92deg, #fff 10%, var(--purple) 55%, var(--peach) 95%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero-sub{
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: var(--text-mid);
+  max-width: 520px;
+  font-weight:500;
+  margin-bottom: 34px;
+}
+.hero-sub b{ color: var(--text-hi); font-weight:700; }
+
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-bottom: 40px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  font-size: 14.5px;
+  padding: 16px 26px;
+  border-radius: 100px;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .35s;
+  white-space:nowrap;
+}
+.btn svg{ width:19px; height:19px; flex-shrink:0; }
+.btn-primary{
+  background: linear-gradient(120deg, #25D366 0%, #1fb959 100%);
+  color:#08150c;
+  box-shadow: 0 8px 30px rgba(37,211,102,0.35);
+}
+.btn-primary:hover{
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(37,211,102,0.5);
+}
+.btn-ghost{
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: var(--text-hi);
+}
+.btn-ghost:hover{
+  transform: translateY(-3px);
+  background: var(--glass-2);
+  border-color: rgba(255,157,125,0.55);
+  box-shadow: var(--shadow-peach);
+}
+
+.hero-stats{
+  display:flex;
+  gap:28px;
+  flex-wrap:wrap;
+}
+.stat b{
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  display:block;
+  background: linear-gradient(120deg,var(--gold),var(--peach));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.stat span{
+  font-size: 12px;
+  color: var(--text-low);
+  font-weight:600;
+}
+
+/* --- Hero visual: floating phone mockup --- */
+.hero-visual{ position:relative; }
+.phone{
+  position:relative;
+  width: min(310px, 82vw);
+  margin-inline:auto;
+  padding: 14px;
+  border-radius: 40px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.02));
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-glow), 0 30px 60px rgba(0,0,0,0.5);
+  animation: floaty 6s ease-in-out infinite;
+}
+@keyframes floaty{
+  0%,100%{ transform: translateY(0) rotate(-1.2deg); }
+  50%{ transform: translateY(-16px) rotate(1deg); }
+}
+.phone-screen{
+  border-radius: 28px;
+  overflow:hidden;
+  background: linear-gradient(160deg, var(--midnight-2), var(--bg-deep) 60%);
+  aspect-ratio: 9/17.5;
+  position:relative;
+  padding: 22px 18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:10px;
+}
+.phone-screen::before{
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(circle at 30% 20%, rgba(139,107,255,0.35), transparent 55%),
+              radial-gradient(circle at 80% 80%, rgba(255,157,125,0.28), transparent 55%);
+}
+.phone-badge{
+  position:absolute; top:16px; left:18px;
+  font-size:10px; font-weight:700;
+  letter-spacing:.08em;
+  color: var(--text-low);
+  text-transform:uppercase;
+  z-index:2;
+}
+.heart-float{
+  position:absolute; z-index:2;
+  font-size: 18px;
+  opacity:0;
+  animation: heartUp 4s ease-in infinite;
+}
+.heart-float:nth-child(2){ right:22%; top:38%; animation-delay:.6s; }
+.heart-float:nth-child(3){ right:38%; top:52%; animation-delay:1.8s; font-size:13px;}
+.heart-float:nth-child(4){ right:12%; top:60%; animation-delay:2.8s; font-size:15px;}
+@keyframes heartUp{
+  0%{ opacity:0; transform: translateY(0) scale(.7); }
+  15%{ opacity:1; }
+  85%{ opacity:.7; }
+  100%{ opacity:0; transform: translateY(-90px) scale(1.1); }
+}
+.chat-bubble{
+  position:relative; z-index:2;
+  background: rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.16);
+  backdrop-filter: blur(10px);
+  padding: 12px 14px;
+  border-radius: 16px 16px 16px 4px;
+  font-size: 12.5px;
+  font-weight:600;
+  color: var(--text-hi);
+  max-width: 88%;
+}
+.chat-bubble.script-line{
+  font-family: var(--font-script);
+  font-size: 20px;
+  font-weight:700;
+  color: var(--peach);
+  background:none;
+  border:none;
+  padding: 0 4px;
+}
+.typing-dots{
+  display:inline-flex; gap:4px; z-index:2; position:relative; margin-left:4px;
+}
+.typing-dots span{
+  width:5px; height:5px; border-radius:50%;
+  background: var(--text-low);
+  animation: blink 1.2s infinite;
+}
+.typing-dots span:nth-child(2){ animation-delay:.2s; }
+.typing-dots span:nth-child(3){ animation-delay:.4s; }
+@keyframes blink{ 0%,100%{opacity:.2;} 50%{opacity:1;} }
+
+.phone-glow{
+  position:absolute;
+  width:60%; height:60%;
+  background: var(--purple);
+  filter: blur(70px);
+  opacity:.35;
+  top:10%; left:20%;
+  z-index:-1;
+  border-radius:50%;
+}
+
+/* floating micro-badge near phone */
+.float-tag{
+  position:absolute;
+  background: var(--glass-2);
+  border:1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-size:12.5px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  animation: floaty 5.5s ease-in-out infinite;
+}
+.float-tag.t1{ top:6%; right:-4%; animation-delay:.4s; }
+.float-tag.t2{ bottom:4%; left:-6%; animation-delay:1.1s; }
+.float-tag .dot{ width:8px; height:8px; border-radius:50%; background:#25D366; box-shadow:0 0 8px #25D366; }
+
+/* ============================================
+   4. MARQUEE
+============================================= */
+.marquee-wrap{
+  border-top:1px solid var(--glass-border-soft);
+  border-bottom:1px solid var(--glass-border-soft);
+  overflow:hidden;
+  padding: 16px 0;
+  background: linear-gradient(90deg, rgba(139,107,255,0.06), rgba(255,157,125,0.06));
+}
+.marquee{
+  display:flex;
+  width:max-content;
+  animation: scrollLeft 26s linear infinite;
+}
+.marquee span{
+  font-family: var(--font-display);
+  font-weight:700;
+  font-size: 15px;
+  text-transform:uppercase;
+  letter-spacing: .04em;
+  color: var(--text-mid);
+  padding: 0 26px;
+  display:flex;
+  align-items:center;
+  gap:26px;
+  white-space:nowrap;
+}
+.marquee span i{
+  font-style:normal;
+  color: var(--peach);
+}
+@keyframes scrollLeft{
+  0%{ transform: translateX(0); }
+  100%{ transform: translateX(-50%); }
+}
+
+/* ============================================
+   5. SECTION HEADERS
+============================================= */
+.section{ padding: 110px 0; position:relative; }
+.section-head{
+  max-width: 640px;
+  margin-bottom: 56px;
+}
+.section-title{
+  font-family: var(--font-display);
+  font-weight:700;
+  font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+  margin-top: 14px;
+}
+.section-desc{
+  color: var(--text-mid);
+  margin-top: 14px;
+  font-size: 15.5px;
+  max-width: 520px;
+}
+
+/* reveal-on-scroll */
+.reveal{
+  opacity:0;
+  transform: translateY(36px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+.reveal.is-visible{
+  opacity:1;
+  transform: translateY(0);
+}
+.reveal-delay-1{ transition-delay:.08s; }
+.reveal-delay-2{ transition-delay:.16s; }
+.reveal-delay-3{ transition-delay:.24s; }
+
+/* ============================================
+   6. VALUE PROPS
+============================================= */
+.value-grid{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 22px;
+}
+.value-card{
+  background: var(--glass);
+  border:1px solid var(--glass-border-soft);
+  border-radius: var(--radius-md);
+  padding: 30px 26px;
+  backdrop-filter: blur(14px);
+  transition: transform .4s var(--ease), border-color .4s, background .4s;
+}
+.value-card:hover{
+  transform: translateY(-6px);
+  border-color: rgba(139,107,255,0.5);
+  background: var(--glass-2);
+}
+.value-icon{
+  width:46px; height:46px;
+  border-radius: 13px;
+  display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(135deg, var(--purple), var(--purple-soft));
+  margin-bottom: 18px;
+  box-shadow: 0 8px 22px rgba(139,107,255,0.35);
+}
+.value-icon svg{ width:22px; height:22px; color:#fff; }
+.value-card h3{
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-weight:600;
+  margin-bottom: 10px;
+}
+.value-card p{
+  font-size: 14px;
+  color: var(--text-mid);
+}
+
+/* ============================================
+   7. SERVICES
+============================================= */
+.service-grid{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+}
+.service-card{
+  position:relative;
+  border-radius: var(--radius-lg);
+  padding: 2px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+  overflow:hidden;
+  transition: transform .5s var(--ease);
+}
+.service-card:hover{ transform: translateY(-8px); }
+.service-card-inner{
+  background: linear-gradient(165deg, var(--bg-deep-2), var(--bg-deep) 70%);
+  border-radius: calc(var(--radius-lg) - 2px);
+  padding: 30px 26px 28px;
+  height:100%;
+  position:relative;
+  overflow:hidden;
+}
+.service-card-inner::after{
+  content:'';
+  position:absolute;
+  width:180px; height:180px;
+  border-radius:50%;
+  background: radial-gradient(circle, var(--purple), transparent 70%);
+  opacity:.25;
+  top:-60px; right:-60px;
+  transition: opacity .5s, transform .5s var(--ease);
+}
+.service-card:hover .service-card-inner::after{
+  opacity:.5;
+  transform: scale(1.2);
+}
+.service-tag{
+  display:inline-block;
+  font-size: 11px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: rgba(255,157,125,0.14);
+  color: var(--peach);
+  border: 1px solid rgba(255,157,125,0.3);
+  margin-bottom: 18px;
+  position:relative; z-index:2;
+}
+.service-card h3{
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight:600;
+  margin-bottom: 12px;
+  position:relative; z-index:2;
+}
+.service-card p{
+  font-size: 14px;
+  color: var(--text-mid);
+  margin-bottom: 22px;
+  position:relative; z-index:2;
+}
+.service-list{
+  display:flex; flex-direction:column; gap:9px;
+  margin-bottom: 24px;
+  position:relative; z-index:2;
+}
+.service-list li{
+  display:flex; align-items:center; gap:9px;
+  font-size: 13px;
+  color: var(--text-hi);
+  font-weight:500;
+}
+.service-list svg{ width:15px; height:15px; color: var(--peach); flex-shrink:0; }
+.service-price{
+  font-family: var(--font-display);
+  font-size: 15px;
+  color:var(--text-hi);
+  margin-bottom: 18px;
+  position:relative; z-index:2;
+}
+.service-price span{
+  color: var(--text-low);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight:500;
+}
+.service-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size: 13.5px;
+  font-weight:700;
+  color: var(--text-hi);
+  position:relative; z-index:2;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--glass-border);
+  transition: gap .3s, border-color .3s, color .3s;
+}
+.service-cta svg{ width:14px; height:14px; transition: transform .3s var(--ease); }
+.service-card:hover .service-cta{ gap:12px; color:var(--peach); border-color: var(--peach); }
+.service-card:hover .service-cta svg{ transform: translateX(3px); }
+
+/* ============================================
+   8. PROCESS / WHY (testimonials)
+============================================= */
+.testi-grid{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+.testi-card{
+  background: var(--glass);
+  border:1px solid var(--glass-border-soft);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+}
+.testi-stars{ color: var(--gold); font-size: 13px; margin-bottom: 12px; letter-spacing:2px; }
+.testi-card p{ font-size:13.5px; color:var(--text-mid); margin-bottom:16px; }
+.testi-who{ display:flex; align-items:center; gap:10px; }
+.testi-avatar{
+  width:34px; height:34px; border-radius:50%;
+  background: linear-gradient(135deg, var(--purple), var(--peach));
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display); font-weight:700; font-size:12px; color:#0a0612;
+}
+.testi-who b{ font-size:13px; display:block; }
+.testi-who span{ font-size:11.5px; color:var(--text-low); }
+.testi-note{
+  font-size: 11.5px;
+  color: var(--text-low);
+  margin-top: 30px;
+  text-align:center;
+}
+
+/* ============================================
+   9. BIG CTA
+============================================= */
+.cta-section{ padding: 100px 0 130px; }
+.cta-box{
+  position:relative;
+  border-radius: 32px;
+  padding: 70px 40px;
+  text-align:center;
+  overflow:hidden;
+  background: linear-gradient(160deg, rgba(139,107,255,0.16), rgba(255,157,125,0.10));
+  border: 1px solid var(--glass-border);
+}
+.cta-box::before{
+  content:'';
+  position:absolute;
+  width:60%; height:140%;
+  background: radial-gradient(circle, rgba(139,107,255,0.5), transparent 65%);
+  top:-30%; left:-10%;
+  filter: blur(60px);
+  animation: drift1 30s ease-in-out infinite alternate;
+}
+.cta-box::after{
+  content:'';
+  position:absolute;
+  width:50%; height:120%;
+  background: radial-gradient(circle, rgba(255,157,125,0.4), transparent 65%);
+  bottom:-30%; right:-10%;
+  filter: blur(60px);
+  animation: drift2 34s ease-in-out infinite alternate;
+}
+.cta-content{ position:relative; z-index:2; }
+.cta-box .eyebrow{ justify-content:center; margin-bottom:16px; }
+.cta-box h2{
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight:700;
+  max-width: 640px;
+  margin:0 auto 18px;
+  line-height:1.2;
+}
+.cta-box .section-desc{ margin-inline:auto; text-align:center; margin-bottom: 36px; }
+.cta-actions{
+  display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+  margin-bottom: 28px;
+}
+.slots{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size: 13px; font-weight:600; color: var(--text-mid);
+  background: rgba(0,0,0,0.25);
+  padding: 9px 18px; border-radius:100px;
+  border:1px solid var(--glass-border-soft);
+}
+.slots b{ color: var(--peach); }
+.slots .pulse-dot{
+  width:8px; height:8px; border-radius:50%; background:#ff5c5c;
+  box-shadow: 0 0 8px #ff5c5c;
+  animation: pulseDot 1.6s infinite;
+}
+@keyframes pulseDot{ 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+/* ============================================
+   10. FOOTER
+============================================= */
+footer{
+  padding: 46px 0 120px;
+  border-top: 1px solid var(--glass-border-soft);
+  text-align:center;
+}
+.footer-logo{
+  font-family: var(--font-display);
+  font-weight:700;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.footer-logo span{ color: var(--peach); }
+.footer-links{
+  display:flex; justify-content:center; gap:22px; margin: 18px 0;
+  flex-wrap:wrap;
+}
+.footer-links a{
+  font-size: 13px; color: var(--text-mid); font-weight:600;
+  display:inline-flex; align-items:center; gap:6px;
+  transition: color .3s;
+}
+.footer-links a:hover{ color: var(--peach); }
+.footer-links svg{ width:15px; height:15px; }
+footer .copyright{ font-size:12px; color: var(--text-low); margin-top:14px; }
+
+/* ============================================
+   11. STICKY MOBILE CTA BAR
+============================================= */
+.sticky-cta{
+  position:fixed;
+  bottom:0; left:0; right:0;
+  z-index:90;
+  display:none;
+  gap:10px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(9,6,15,0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid var(--glass-border);
+}
+.sticky-cta .btn{ flex:1; justify-content:center; padding:14px 10px; font-size:13.5px; }
+
+/* ============================================
+   12. RESPONSIVE
+============================================= */
+@media (max-width: 980px){
+  .hero-grid{ grid-template-columns:1fr; text-align:center; }
+  .hero-sub{ margin-inline:auto; }
+  .hero-actions{ justify-content:center; }
+  .hero-stats{ justify-content:center; }
+  .hero-visual{ order:-1; margin-bottom: 20px; }
+  .value-grid, .service-grid, .testi-grid{ grid-template-columns: 1fr 1fr; }
+  .section-head{ margin-inline:auto; text-align:center; }
+}
+@media (max-width: 680px){
+  .container{ padding-inline:20px; }
+  .hero{ padding-top:130px; min-height:auto; }
+  .value-grid, .service-grid, .testi-grid{ grid-template-columns: 1fr; }
+  .section{ padding: 76px 0; }
+  .nav-cta span{ display:none; }
+  .nav-cta{ padding:10px 12px; }
+  .sticky-cta{ display:flex; }
+  body{ padding-bottom: 78px; }
+  .cta-box{ padding: 46px 22px; }
+  .float-tag{ display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- AMBIENT BACKGROUND -->
+<div class="ambient" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+<div class="noise" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <div class="logo">Checen<span>.Dev</span></div>
+    <a href="https://wa.me/6285161608123" target="_blank" rel="noopener" class="nav-cta">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10.1 9 9.7 8 9.5 7.5c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.3 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.5 1 .9-3.4-.2-.3C3.4 15 3 13.5 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9.3z"/></svg>
+      <span>Chat Sekarang</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">Open Slot Bulan Ini • Custom Website</p>
+      <h1 class="hero-title reveal reveal-delay-1">
+        Web HTML Custom
+        <span class="line2">By Checen</span>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-2">
+        Udah nggak zaman ngucapin cuma lewat chat biasa. Bikin <b>ayang, bestie, atau crush</b> kamu salting brutal dengan website estetik yang <span class="script">cuma ada satu</span> di dunia — didesain khusus, bukan template pasaran.
+      </p>
+      <div class="hero-actions reveal reveal-delay-3">
+        <a href="https://wa.me/6285161608123?text=Halo%20Checen%2C%20aku%20mau%20diskusiin%20konsep%20web%20custom%20aku%20nih!" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10.1 9 9.7 8 9.5 7.5c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.3 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.5 1 .9-3.4-.2-.3C3.4 15 3 13.5 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9.3z"/></svg>
+          Pesan via WhatsApp
+        </a>
+        <a href="https://instagram.com/chnfhrsyh" target="_blank" rel="noopener" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+          Pesan lewat IG
+        </a>
+      </div>
+      <div class="hero-stats reveal reveal-delay-3">
+        <div class="stat"><b>150+</b><span>Web sudah dibikin</span></div>
+        <div class="stat"><b>4.9/5</b><span>Rating dari klien</span></div>
+        <div class="stat"><b>&lt;24 jam</b><span>Respon chat</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal reveal-delay-2">
+      <div class="float-tag t1"><span class="dot"></span> Fast Respon</div>
+      <div class="float-tag t2">✨ Desain 100% Custom</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-badge">preview.checen.dev</div>
+          <span class="heart-float">💜</span>
+          <span class="heart-float">🤍</span>
+          <span class="heart-float">🧡</span>
+          <div class="chat-bubble script-line">Happy Anniversary, Sayang.</div>
+          <div class="chat-bubble">Klik untuk buka kejutanmu <span class="typing-dots"><span></span><span></span><span></span></span></div>
+        </div>
+        <div class="phone-glow"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee">
+    <span>
+      <i>✦</i> Estetik Parah <i>✦</i> Bebas Request Lagu <i>✦</i> Animasi Smooth Abis <i>✦</i> Bikin Baper <i>✦</i> Desain 100% Custom <i>✦</i>
+      <i>✦</i> Estetik Parah <i>✦</i> Bebas Request Lagu <i>✦</i> Animasi Smooth Abis <i>✦</i> Bikin Baper <i>✦</i> Desain 100% Custom <i>✦</i>
+    </span>
+  </div>
+</div>
+
+<!-- VALUE PROPOSITION -->
+<section class="section" id="kenapa">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Kenapa Pilih Kita</p>
+      <h2 class="section-title">Bukan sekadar web,<br>ini <span class="script">experience</span>.</h2>
+      <p class="section-desc">Tiga alasan kenapa web custom dari Checen nggak akan pernah terasa generic atau template-an.</p>
+    </div>
+
+    <div class="value-grid">
+      <div class="value-card reveal">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z"/></svg>
+        </div>
+        <h3>Desain Super Estetik</h3>
+        <p>Setiap web dirancang dari nol dengan color palette & layout yang selaras sama vibe kalian, bukan asal tempel template.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <h3>Bebas Request Lagu & Foto</h3>
+        <p>Backsound, galeri foto, sampe caption receh atau baper — semua bisa custom sesuai cerita kalian berdua.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>
+        </div>
+        <h3>Animasi Smooth Abis</h3>
+        <p>Transisi halus, elemen muncul on-scroll, sampai micro-interaction di setiap tombol biar makin terasa mewah.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="layanan">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Layanan Kami</p>
+      <h2 class="section-title">Pilih yang paling pas sama momen kamu.</h2>
+      <p class="section-desc">Semua paket dikerjain manual satu-satu, jadi hasilnya beneran personal — bukan hasil generate massal.</p>
+    </div>
+
+    <div class="service-grid">
+      <!-- Card 1 -->
+      <div class="service-card reveal">
+        <div class="service-card-inner">
+          <span class="service-tag">Paling Laris</span>
+          <h3>Web Ucapan Ultah</h3>
+          <p>Ganti chat "HBD ya" biasa jadi website ulang tahun personal lengkap dengan galeri foto, ucapan panjang, dan lagu favoritnya.</p>
+          <ul class="service-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Galeri foto & musik custom</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Animasi confetti & countdown</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Link siap kirim H-1</li>
+          </ul>
+          <a href="https://wa.me/6285161608123?text=Halo%20Checen%2C%20aku%20mau%20order%20Web%20Ucapan%20Ultah!" target="_blank" rel="noopener" class="service-cta">
+            Diskusi Konsep
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-card-inner">
+          <span class="service-tag">Bikin Baper</span>
+          <h3>Web Anniversary</h3>
+          <p>Rayain momen jadian dengan timeline cerita kalian dari awal ketemu sampai sekarang, dikemas se-elegan dan se-romantis mungkin.</p>
+          <ul class="service-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Timeline perjalanan hubungan</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Love letter interaktif</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Efek falling petals / hearts</li>
+          </ul>
+          <a href="https://wa.me/6285161608123?text=Halo%20Checen%2C%20aku%20mau%20order%20Web%20Anniversary!" target="_blank" rel="noopener" class="service-cta">
+            Diskusi Konsep
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-card-inner">
+          <span class="service-tag">Full Custom</span>
+          <h3>Custom HTML</h3>
+          <p>Punya ide lain di luar ucapan ultah atau anniversary? Landing page, portfolio, undangan, apa pun — bisa dibikinin dari nol.</p>
+          <ul class="service-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Konsep & layout 100% bebas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Fully responsive di HP</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> File siap hosting sendiri</li>
+          </ul>
+          <a href="https://wa.me/6285161608123?text=Halo%20Checen%2C%20aku%20mau%20order%20Custom%20HTML!" target="_blank" rel="noopener" class="service-cta">
+            Diskusi Konsep
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONI (contoh — ganti dengan testimoni asli klien kamu) -->
+<section class="section" id="testimoni">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Kata Mereka</p>
+      <h2 class="section-title">Katanya sih, langsung dibikin nangis. 🥹</h2>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Aku kasih ini ke pacarku pas anniversary, dia diem lama terus meleleh. Worth it banget!"</p>
+        <div class="testi-who">
+          <div class="testi-avatar">R</div>
+          <div><b>Raisa</b><span>Web Anniversary</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Prosesnya cepet, komunikatif, hasilnya beneran estetik nggak kayak template gratisan."</p>
+        <div class="testi-who">
+          <div class="testi-avatar">D</div>
+          <div><b>Dhea</b><span>Web Ucapan Ultah</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Request desain aneh-aneh dituruti semua, hasil akhirnya di luar ekspektasi. Recommended!"</p>
+        <div class="testi-who">
+          <div class="testi-avatar">B</div>
+          <div><b>Bagas</b><span>Custom HTML</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="testi-note">*Testimoni contoh — silakan ganti dengan review asli dari klienmu.</p>
+  </div>
+</section>
+
+<!-- BIG CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-content">
+        <p class="eyebrow">Slot Terbatas Setiap Bulan</p>
+        <h2>Mau bikin dia nangis terharu?</h2>
+        <p class="section-desc">Yuk diskusiin konsep web kamu sekarang, sebelum antrean bulan ini penuh dan kamu harus nunggu batch berikutnya.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/6285161608123?text=Halo%20Checen%2C%20aku%20mau%20diskusiin%20konsep%20web%20custom%20aku%20nih!" target="_blank" rel="noopener" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10.1 9 9.7 8 9.5 7.5c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.3 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.5 1 .9-3.4-.2-.3C3.4 15 3 13.5 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9.3z"/></svg>
+            Pesan via WhatsApp
+          </a>
+          <a href="https://instagram.com/chnfhrsyh" target="_blank" rel="noopener" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+            Pesan lewat IG
+          </a>
+        </div>
+        <!-- angka slot di bawah ini contoh, silakan sesuaikan tiap bulan -->
+        <div class="slots"><span class="pulse-dot"></span> Sisa <b>4 slot</b> untuk bulan ini</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">Checen<span>.Dev</span></div>
+    <p style="color:var(--text-low); font-size:13px;">Web HTML Custom By Checen — dibikin dengan niat, kopi, dan banyak coffee break.</p>
+    <div class="footer-links">
+      <a href="https://wa.me/6285161608123" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10.1 9 9.7 8 9.5 7.5c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.3 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.5 1 .9-3.4-.2-.3C3.4 15 3 13.5 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9.3z"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://instagram.com/chnfhrsyh" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+    </div>
+    <p class="copyright">© 2026 Web HTML Custom By Checen. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta">
+  <a href="https://wa.me/6285161608123?text=Halo%20Checen%2C%20aku%20mau%20diskusiin%20konsep%20web%20custom%20aku%20nih!" target="_blank" rel="noopener" class="btn btn-primary">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10.1 9 9.7 8 9.5 7.5c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.2L2 22l4.9-1.3c1.5.8 3.3 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.5 1 .9-3.4-.2-.3C3.4 15 3 13.5 3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9.3z"/></svg>
+    WhatsApp
+  </a>
+  <a href="https://instagram.com/chnfhrsyh" target="_blank" rel="noopener" class="btn btn-ghost">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+    IG
+  </a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* --- Navbar scroll state --- */
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if(window.scrollY > 30){ nav.classList.add('scrolled'); }
+    else{ nav.classList.remove('scrolled'); }
+  };
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* --- Scroll reveal --- */
+  const revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el=> io.observe(el));
+  } else {
+    revealEls.forEach(el=> el.classList.add('is-visible'));
+  }
+
+  /* --- Reduced motion: matikan animasi berat bila diminta --- */
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced){
+    document.querySelectorAll('.phone, .float-tag, .heart-float, .marquee').forEach(el=>{
+      el.style.animation = 'none';
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
