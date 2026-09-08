@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Random Pictures Cici & Sendyyy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-top: #bfe3f2;
+    --sky-mid: #d7ecf6;
+    --sky-low: #f3f0ef;
+    --cloud: #ffffff;
+    --sun: #ffe9c7;
+    --blush: #f6d7e3;
+    --lavender: #ded3f2;
+    --leaf: #a9c9a2;
+    --ink: #35485c;
+    --ink-soft: #5a7186;
+    --cream: #fffdf8;
+    --glass: rgba(255,255,255,0.35);
+    --glass-border: rgba(255,255,255,0.55);
+    --shadow-soft: 0 20px 45px rgba(90,120,150,0.18);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Quicksand', sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-low) 100%);
+    overflow-x:hidden;
+  }
+
+  h1,h2,.serif{
+    font-family:'Cormorant Garamond', serif;
+  }
+
+  /* ---------- LOADING SCREEN ---------- */
+  #loading-screen{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:linear-gradient(160deg, #cfe8f5, #f3e6ef);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:opacity 1s ease;
+  }
+  #loading-screen.hide{
+    opacity:0;
+    pointer-events:none;
+  }
+  .load-percent{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(3.5rem, 12vw, 7rem);
+    font-weight:600;
+    color:var(--ink);
+    letter-spacing:2px;
+  }
+  .load-text{
+    margin-top:0.8rem;
+    font-size:clamp(1rem, 2.4vw, 1.3rem);
+    font-style:italic;
+    color:var(--ink-soft);
+    letter-spacing:1px;
+  }
+  .load-bar-track{
+    margin-top:2rem;
+    width:min(60vw, 260px);
+    height:4px;
+    border-radius:4px;
+    background:rgba(255,255,255,0.6);
+    overflow:hidden;
+  }
+  .load-bar-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, #a9d3e8, #e6c9dd);
+    border-radius:4px;
+  }
+
+  /* ---------- SKY BACKGROUND (fixed, behind everything) ---------- */
+  #sky-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .sun{
+    position:absolute;
+    top:6%;
+    right:10%;
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fff7e6, var(--sun) 60%, rgba(255,233,199,0) 75%);
+    box-shadow:0 0 80px 30px rgba(255,233,199,0.55);
+    animation:sun-pulse 6s ease-in-out infinite;
+  }
+  @keyframes sun-pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+  }
+  .cloud{
+    position:absolute;
+    background:var(--cloud);
+    opacity:0.75;
+    border-radius:100px;
+    filter:blur(0.5px);
+  }
+  .cloud::before, .cloud::after{
+    content:"";
+    position:absolute;
+    background:var(--cloud);
+    border-radius:50%;
+  }
+  .bird{
+    position:absolute;
+    width:26px;
+    height:14px;
+    opacity:0.55;
+  }
+  .bird svg{width:100%;height:100%;display:block;}
+  .glow-particle{
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0));
+    animation:float-glow linear infinite;
+  }
+  @keyframes float-glow{
+    0%{transform:translateY(0) translateX(0); opacity:0;}
+    10%{opacity:0.9;}
+    90%{opacity:0.6;}
+    100%{transform:translateY(-90vh) translateX(20px); opacity:0;}
+  }
+  .leaf{
+    position:absolute;
+    top:-5%;
+    width:14px;
+    height:14px;
+    background:var(--leaf);
+    border-radius:0 60% 0 60%;
+    opacity:0.8;
+    animation:leaf-fall linear infinite;
+  }
+  @keyframes leaf-fall{
+    0%{transform:translateY(-10vh) translateX(0) rotate(0deg); opacity:0.9;}
+    100%{transform:translateY(110vh) translateX(60px) rotate(360deg); opacity:0.3;}
+  }
+
+  section{
+    position:relative;
+    z-index:1;
+  }
+
+  /* ---------- HERO ---------- */
+  #hero{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem 1.5rem;
+  }
+  .hero-eyebrow{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    letter-spacing:1.5px;
+    margin-bottom:0.6rem;
+  }
+  .hero-title{
+    font-size:clamp(2.4rem, 7vw, 5.2rem);
+    font-weight:600;
+    line-height:1.12;
+    margin:0;
+    color:var(--ink);
+    text-shadow:0 6px 30px rgba(255,255,255,0.6);
+  }
+  .hero-title em{
+    font-style:italic;
+    color:#c98fb0;
+  }
+  .hero-sub{
+    margin-top:1.1rem;
+    max-width:34ch;
+    font-size:clamp(0.95rem, 2vw, 1.1rem);
+    color:var(--ink-soft);
+  }
+  .scroll-hint{
+    margin-top:3rem;
+    width:24px;
+    height:38px;
+    border:2px solid var(--ink-soft);
+    border-radius:20px;
+    opacity:0.6;
+    position:relative;
+  }
+  .scroll-hint::before{
+    content:"";
+    position:absolute;
+    top:6px;
+    left:50%;
+    width:4px;
+    height:8px;
+    background:var(--ink-soft);
+    border-radius:2px;
+    transform:translateX(-50%);
+    animation:scroll-dot 1.6s ease-in-out infinite;
+  }
+  @keyframes scroll-dot{
+    0%{top:6px; opacity:1;}
+    70%{top:18px; opacity:0.2;}
+    100%{top:6px; opacity:0;}
+  }
+
+  /* Trees fixed as part of the wallpaper, don't move on scroll */
+  .tree-row{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:28vh;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+  }
+  .tree{
+    position:absolute;
+    bottom:-2%;
+    transform-origin:bottom center;
+    animation:sway 5s ease-in-out infinite;
+  }
+  @keyframes sway{
+    0%,100%{transform:rotate(-2deg);}
+    50%{transform:rotate(2deg);}
+  }
+
+  /* ---------- GALLERY ---------- */
+  #gallery{
+    padding:6rem 1.5rem 4rem;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .section-heading{
+    text-align:center;
+    margin-bottom:3rem;
+  }
+  .section-heading h2{
+    font-size:clamp(2rem, 5vw, 3rem);
+    font-weight:500;
+    margin:0 0 0.5rem;
+  }
+  .section-heading p{
+    color:var(--ink-soft);
+    font-size:1rem;
+    margin:0;
+  }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:2.2rem;
+  }
+  .media-frame{
+    position:relative;
+    aspect-ratio:3/4;
+    padding:7px;
+    background:linear-gradient(135deg, #f3c9dd 0%, #e3d3f5 45%, #bfe0ef 100%);
+    box-shadow:
+      var(--shadow-soft),
+      0 0 0 1px rgba(255,255,255,0.5) inset,
+      0 0 26px rgba(230,190,215,0.35);
+    transition:transform 0.45s ease, box-shadow 0.45s ease;
+  }
+  .media-frame::after{
+    content:"✦";
+    position:absolute;
+    top:10px;
+    right:15px;
+    font-size:0.85rem;
+    color:rgba(255,255,255,0.95);
+    text-shadow:0 0 8px rgba(255,255,255,0.9);
+    z-index:2;
+    pointer-events:none;
+  }
+  .media-frame:nth-child(3n)::after{ content:"❀"; top:auto; bottom:12px; left:14px; right:auto; font-size:0.8rem; }
+  .media-frame:nth-child(4n)::after{ content:""; }
+  .frame-inner{
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    border-radius:inherit;
+    background:var(--glass);
+    backdrop-filter:blur(6px);
+  }
+  .frame-inner::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    border-radius:inherit;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.35) inset;
+    background:linear-gradient(155deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.15) 100%);
+    pointer-events:none;
+  }
+  .media-frame img, .media-frame video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    border-radius:inherit;
+  }
+  .media-frame:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:
+      0 28px 55px rgba(90,120,150,0.26),
+      0 0 0 1px rgba(255,255,255,0.6) inset,
+      0 0 40px rgba(220,180,220,0.55);
+  }
+  .media-frame figcaption{
+    position:absolute;
+    bottom:0; left:0; right:0;
+    padding:0.7rem 1rem;
+    font-size:0.75rem;
+    color:#fff;
+    background:linear-gradient(0deg, rgba(50,60,75,0.55), transparent);
+    opacity:0;
+    transition:opacity 0.3s ease;
+    z-index:3;
+    border-radius:inherit;
+  }
+  .media-frame:hover figcaption{opacity:1;}
+
+  /* asymmetric blob radii, cycling variants */
+  .blob-1{border-radius:62% 38% 55% 45%/45% 55% 45% 55%;}
+  .blob-2{border-radius:38% 62% 42% 58%/58% 42% 58% 42%;}
+  .blob-3{border-radius:70% 30% 45% 55%/40% 55% 45% 60%;}
+  .blob-4{border-radius:45% 55% 65% 35%/55% 40% 60% 45%;}
+  .blob-5{border-radius:55% 45% 35% 65%/35% 65% 40% 60%;}
+  .video-frame{
+    grid-column:span 2;
+    aspect-ratio:16/10;
+    background:linear-gradient(135deg, #a8ddd0 0%, #bfe0ef 50%, #d9e9c9 100%);
+  }
+  @media (max-width:640px){
+    .video-frame{grid-column:span 2;}
+  }
+  .video-frame video{background:#0e1a24;}
+  .video-frame::after{ content:"▸"; top:12px; right:16px; font-size:1rem; }
+  .play-badge{
+    position:absolute;
+    top:0.8rem;
+    left:0.8rem;
+    background:rgba(255,255,255,0.8);
+    color:var(--ink);
+    font-size:0.7rem;
+    padding:0.3rem 0.7rem;
+    border-radius:20px;
+    letter-spacing:0.5px;
+    z-index:3;
+  }
+
+  /* ---------- SWEET MESSAGE ---------- */
+  #message{
+    padding:6rem 1.5rem 7rem;
+    display:flex;
+    justify-content:center;
+  }
+  .message-card{
+    max-width:680px;
+    text-align:center;
+    padding:3rem clamp(1.5rem, 5vw, 3.5rem);
+    background:linear-gradient(160deg, rgba(255,255,255,0.5), rgba(255,255,255,0.25));
+    border:1px solid var(--glass-border);
+    border-radius:38px 12px 38px 12px;
+    backdrop-filter:blur(8px);
+    box-shadow:var(--shadow-soft);
+  }
+  .message-card .mark{
+    font-size:2.4rem;
+    color:#c98fb0;
+    font-family:'Cormorant Garamond', serif;
+    line-height:1;
+    margin-bottom:0.5rem;
+  }
+  .message-card p{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:clamp(1.2rem, 3vw, 1.55rem);
+    line-height:1.75;
+    color:var(--ink);
+    margin:0 0 1.4rem;
+  }
+  .message-card .signature{
+    font-family:'Quicksand', sans-serif;
+    font-style:normal;
+    font-size:0.85rem;
+    letter-spacing:1.5px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:3.5rem 1.5rem 4.5rem;
+    text-align:center;
+    color:var(--ink-soft);
+  }
+  footer h3{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.4rem;
+    font-weight:500;
+    color:var(--ink);
+    margin:0 0 1.2rem;
+  }
+  .social-links{
+    display:flex;
+    gap:1.2rem;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .social-links a{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:0.6rem 1.1rem;
+    border-radius:30px;
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    color:var(--ink);
+    text-decoration:none;
+    font-size:0.9rem;
+    transition:transform 0.3s ease, background 0.3s ease;
+  }
+  .social-links a:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,0.6);
+  }
+  .social-links svg{width:18px;height:18px;}
+  footer .fine-print{
+    margin-top:2.4rem;
+    font-size:0.75rem;
+    opacity:0.6;
+  }
+
+  /* ---------- FLOATING MUSIC BUTTON ---------- */
+  #music-toggle{
+    position:fixed;
+    bottom:1.6rem;
+    right:1.6rem;
+    z-index:500;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    border:1px solid var(--glass-border);
+    background:var(--glass);
+    backdrop-filter:blur(8px);
+    box-shadow:var(--shadow-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  #music-toggle svg{width:22px;height:22px;}
+  #music-toggle.playing{animation:pulse-ring 2.4s ease-in-out infinite;}
+  @keyframes pulse-ring{
+    0%,100%{box-shadow:0 0 0 0 rgba(180,210,230,0.5), var(--shadow-soft);}
+    50%{box-shadow:0 0 0 10px rgba(180,210,230,0), var(--shadow-soft);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001s !important; animation-iteration-count:1 !important; transition-duration:0.001s !important;}
+  }
+
+  @media (max-width:480px){
+    .video-frame{grid-column:span 2;}
+    .message-card{border-radius:28px 10px 28px 10px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="load-percent" id="load-percent">1%</div>
+  <div class="load-text">Sabarr dikit cii...</div>
+  <div class="load-bar-track"><div class="load-bar-fill" id="load-bar-fill"></div></div>
+</div>
+
+<!-- FIXED SKY BACKGROUND -->
+<div id="sky-bg">
+  <div class="sun"></div>
+  <div id="clouds-container"></div>
+  <div id="birds-container"></div>
+  <div id="glow-container"></div>
+  <div id="leaves-container"></div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">a little corner of the internet, just for us</div>
+  <h1 class="hero-title">Random Pictures<br><em>Cici &amp; Sendyyy</em></h1>
+  <p class="hero-sub">Foto seadanya gapapa ya ciii??? heheheh</p>
+  <div class="scroll-hint"></div>
+
+  <div class="tree-row" id="tree-row"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-heading">
+    <h2>Our little gallery</h2>
+    <p>17 foto &amp; 2 video — our random activityyyyyyyyy.</p>
+  </div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</section>
+
+<!-- SWEET MESSAGE -->
+<section id="message">
+  <div class="message-card">
+    <div class="mark">❝</div>
+    <p>
+      Dari semua hal random yang pernah terjadi dalam hidupku, memilikimu adalah yang paling tidak pernah kusesali.
+      Terima kasih sudah ada, di hari yang biasa maupun yang berantakan, tanpa pernah benar-benar diminta.
+      Aku bersyukur, sesederhana dan sedalam itu, karena semesta memutuskan untuk mempertemukan kita.
+    </p>
+    <div class="signature">— dari ceceeeeennnnnnnn, to cici yg paling lucu sedunia.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <h3>Our Social Media</h3>
+  <div class="social-links">
+    <a href="https://instagram.com/chnfhrsyh" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      @chnfhrsyh
+    </a>
+    <a href="https://instagram.com/cicilauraaa" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      @cicilauraaa
+    </a>
+  </div>
+  <div class="fine-print">made with a lope ✿</div>
+</footer>
+
+<!-- FLOATING MUSIC BUTTON -->
+<button id="music-toggle" aria-label="Play or pause music">
+  <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+  <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+</button>
+<audio id="bg-audio" loop preload="none">
+  <source src="audio/bgm.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ================= LOADING SCREEN ================= */
+(function(){
+  const percentEl = document.getElementById('load-percent');
+  const barFill = document.getElementById('load-bar-fill');
+  const screen = document.getElementById('loading-screen');
+  let pct = 1;
+  const duration = 5000;
+  const stepTime = duration / 100;
+  const timer = setInterval(() => {
+    pct++;
+    percentEl.textContent = pct + '%';
+    barFill.style.width = pct + '%';
+    if(pct >= 100){
+      clearInterval(timer);
+      setTimeout(() => {
+        screen.classList.add('hide');
+        setTimeout(() => screen.remove(), 1100);
+      }, 250);
+    }
+  }, stepTime);
+})();
+
+/* ================= CLOUDS ================= */
+(function(){
+  const container = document.getElementById('clouds-container');
+  const cloudCount = 6;
+  for(let i=0;i<cloudCount;i++){
+    const c = document.createElement('div');
+    c.className = 'cloud';
+    const w = 90 + Math.random()*140;
+    const h = w*0.42;
+    c.style.width = w+'px';
+    c.style.height = h+'px';
+    c.style.top = (5 + Math.random()*45) + '%';
+    c.style.left = (-20 + Math.random()*120) + '%';
+    c.style.setProperty('--w', w+'px');
+    const dur = 60 + Math.random()*60;
+    c.style.animation = `drift-cloud ${dur}s linear infinite`;
+    c.style.animationDelay = (-Math.random()*dur) + 's';
+    container.appendChild(c);
+  }
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes drift-cloud{
+      from{ transform:translateX(0); }
+      to{ transform:translateX(140vw); }
+    }
+    .cloud::before{ width:55%; height:130%; top:-50%; left:8%; }
+    .cloud::after{ width:65%; height:150%; top:-70%; right:6%; }
+  `;
+  document.head.appendChild(style);
+})();
+
+/* ================= BIRDS ================= */
+(function(){
+  const container = document.getElementById('birds-container');
+  const birdSVG = `<svg viewBox="0 0 24 12" xmlns="http://www.w3.org/2000/svg"><path d="M0 6 Q6 -4 12 6 Q18 -4 24 6" fill="none" stroke="#3a4a5c" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+  function spawnBird(){
+    const b = document.createElement('div');
+    b.className = 'bird';
+    b.innerHTML = birdSVG;
+    const top = 8 + Math.random()*30;
+    b.style.top = top + '%';
+    b.style.left = '-5%';
+    const dur = 14 + Math.random()*10;
+    b.style.transition = `transform ${dur}s linear, opacity 2s ease`;
+    container.appendChild(b);
+    requestAnimationFrame(()=>{
+      b.style.transform = `translateX(115vw) translateY(${(Math.random()*40-20)}px)`;
+    });
+    setTimeout(()=>{ b.style.opacity=0; }, (dur-2)*1000);
+    setTimeout(()=> b.remove(), dur*1000);
+  }
+  spawnBird();
+  setInterval(spawnBird, 7000);
+})();
+
+/* ================= GLOW PARTICLES ================= */
+(function(){
+  const container = document.getElementById('glow-container');
+  function spawnGlow(){
+    const g = document.createElement('div');
+    g.className = 'glow-particle';
+    g.style.left = Math.random()*100 + '%';
+    g.style.bottom = '0';
+    const dur = 8 + Math.random()*6;
+    g.style.animationDuration = dur + 's';
+    container.appendChild(g);
+    setTimeout(()=> g.remove(), dur*1000);
+  }
+  setInterval(spawnGlow, 1400);
+})();
+
+/* ================= FALLING LEAVES ================= */
+(function(){
+  const container = document.getElementById('leaves-container');
+  const colors = ['#a9c9a2', '#c9dba0', '#e3c9a0', '#b7d3c9'];
+  function spawnLeaf(){
+    const l = document.createElement('div');
+    l.className = 'leaf';
+    l.style.left = Math.random()*100 + '%';
+    l.style.background = colors[Math.floor(Math.random()*colors.length)];
+    const dur = 10 + Math.random()*8;
+    l.style.animationDuration = dur + 's';
+    const size = 8 + Math.random()*8;
+    l.style.width = size+'px';
+    l.style.height = size+'px';
+    container.appendChild(l);
+    setTimeout(()=> l.remove(), dur*1000);
+  }
+  setInterval(spawnLeaf, 900);
+})();
+
+/* ================= TREES (simple SVG, swaying) ================= */
+(function(){
+  const row = document.getElementById('tree-row');
+  const treeSVG = (hue) => `
+    <svg width="120" height="180" viewBox="0 0 120 180" xmlns="http://www.w3.org/2000/svg">
+      <rect x="55" y="100" width="10" height="80" fill="#8a7159" rx="4"/>
+      <ellipse cx="60" cy="95" rx="45" ry="50" fill="${hue}" opacity="0.9"/>
+      <ellipse cx="35" cy="115" rx="30" ry="34" fill="${hue}" opacity="0.85"/>
+      <ellipse cx="85" cy="115" rx="30" ry="34" fill="${hue}" opacity="0.85"/>
+    </svg>`;
+  const hues = ['#bcd9b3', '#a9c9a2', '#cfe0b0'];
+  const positions = [4, 20, 78, 92];
+  positions.forEach((pos, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'tree';
+    wrap.style.left = pos + '%';
+    wrap.style.width = (90 + (i%2)*30) + 'px';
+    wrap.style.animationDelay = (i*0.6) + 's';
+    wrap.innerHTML = treeSVG(hues[i % hues.length]);
+    row.appendChild(wrap);
+  });
+})();
+
+/* ================= GALLERY GENERATION ================= */
+(function(){
+  const grid = document.getElementById('gallery-grid');
+  const blobs = ['blob-1','blob-2','blob-3','blob-4','blob-5'];
+  const totalPhotos = 17;
+  const videoSlots = [6, 14]; // positions (1-indexed) where videos are inserted among the 19 items
+
+  const videoSources = [
+    "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm"
+  ];
+
+  let photoIndex = 1;
+  let videoIndex = 0;
+  let slot = 0;
+
+  for(let i=1; i<=totalPhotos + videoSlots.length; i++){
+    if(videoSlots.includes(i)){
+      const fig = document.createElement('figure');
+      fig.className = 'media-frame video-frame ' + blobs[slot % blobs.length];
+      const inner = document.createElement('div');
+      inner.className = 'frame-inner';
+      const badge = document.createElement('span');
+      badge.className = 'play-badge';
+      badge.textContent = 'video';
+      const video = document.createElement('video');
+      video.controls = true;
+      video.playsInline = true;
+      const src = document.createElement('source');
+      src.src = `videos/video${videoIndex+1}.mp4`;
+      src.type = "video/mp4";
+      video.appendChild(src);
+      const cap = document.createElement('figcaption');
+      cap.textContent = 'video ' + (videoIndex+1);
+      inner.appendChild(badge);
+      inner.appendChild(video);
+      inner.appendChild(cap);
+      fig.appendChild(inner);
+      grid.appendChild(fig);
+      videoIndex++;
+    } else {
+      const fig = document.createElement('figure');
+      fig.className = 'media-frame ' + blobs[slot % blobs.length];
+      const inner = document.createElement('div');
+      inner.className = 'frame-inner';
+      const img = document.createElement('img');
+      img.src = `images/foto${photoIndex}.jpeg`;
+      img.alt = 'Foto ' + photoIndex;
+      img.loading = 'lazy';
+      const cap = document.createElement('figcaption');
+      cap.textContent = 'foto ' + photoIndex;
+      inner.appendChild(img);
+      inner.appendChild(cap);
+      fig.appendChild(inner);
+      grid.appendChild(fig);
+      photoIndex++;
+    }
+    slot++;
+  }
+})();
+
+/* ================= MUSIC CONTROL ================= */
+(function(){
+  const btn = document.getElementById('music-toggle');
+  const audio = document.getElementById('bg-audio');
+  const iconPlay = document.getElementById('icon-play');
+  const iconPause = document.getElementById('icon-pause');
+  let started = false;
+  let userPaused = false;
+
+  function updateIcon(){
+    if(audio.paused){
+      iconPlay.style.display = 'block';
+      iconPause.style.display = 'none';
+      btn.classList.remove('playing');
+    } else {
+      iconPlay.style.display = 'none';
+      iconPause.style.display = 'block';
+      btn.classList.add('playing');
+    }
+  }
+
+  function tryAutoplay(){
+    if(started || userPaused) return;
+    started = true;
+    audio.volume = 0.5;
+    audio.play().then(updateIcon).catch(()=>{ started = false; });
+  }
+
+  ['click','touchstart','scroll','keydown'].forEach(evt => {
+    window.addEventListener(evt, tryAutoplay, { once:false, passive:true });
+  });
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if(audio.paused){
+      userPaused = false;
+      audio.play();
+    } else {
+      userPaused = true;
+      audio.pause();
+    }
+    updateIcon();
+  });
+
+  updateIcon();
+})();
+</script>
+</body>
+</html>
